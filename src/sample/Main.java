@@ -36,6 +36,8 @@ public class Main extends Application {
                 new double[]{135, 135, 100, 100, 70,70,100, 100}, 8);
 
         gc.setStroke(Color.GREY);
+        gc.setFill(Color.RED);
+        gc.fillRect(136,51,16,16);
         gc.strokeLine(0,153,300,153);
 
 
