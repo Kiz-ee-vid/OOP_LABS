@@ -4,8 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import java.util.List;
 
-public class Polygonum extends Shapes {
-    public Polygonum(List<Double> point, Paint outlineColor, Paint brushColor, double lineWeight) {
+public class Polyline extends Shapes{
+    public Polyline(List<Double> point, Paint outlineColor, Paint brushColor, double lineWeight) {
 
         this.outline = outlineColor;
         this.background = brushColor;
@@ -17,6 +17,7 @@ public class Polygonum extends Shapes {
         g.setFill(background);
         g.setStroke(outline);
         g.setLineWidth(lineWeight);
+
         double[] pointX = new double[point.size()/2];
         double[] pointY = new double[point.size()/2];
 
@@ -28,7 +29,8 @@ public class Polygonum extends Shapes {
                 pointY[i/2] = point.get(i);
             }
         }
-        g.fillPolygon(pointX, pointY, point.size()/2);
-        g.strokePolygon(pointX, pointY, point.size()/2);
+
+        g.strokePolyline(pointX, pointY, point.size()/2);
+
     }
 }

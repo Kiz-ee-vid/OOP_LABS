@@ -1,11 +1,16 @@
 package org.example.Figures;
 
-import javafx.scene.paint.Color;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Shapes {
-    protected Color outline;
-    protected Color background;
-    protected int lineWeight;
-    public void draw(int[] points) {
+    protected List<Double> point = new ArrayList<>();
+    protected Paint outline;
+    protected Paint background;
+    protected double lineWeight;
+
+    public void draw(GraphicsContext g) {
     }
 }
