@@ -117,7 +117,4 @@ public class Model {
         });
     }
 
-    public String showMouseCoordinates(double x, double y) {
-        return String.format("X : %.01f       Y : %.01f", x, y);
-    }
 }

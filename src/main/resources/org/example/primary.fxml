@@ -95,7 +95,7 @@
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@icons/circ.png" />
+                  <Image url="@icons/Circ.png" />
                </image>
             </ImageView>
          </graphic>
@@ -130,7 +130,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="mouseCoordinates" layoutX="14.0" layoutY="582.0" prefHeight="38.0" prefWidth="114.0" text="X : 0.0    Y : 0.0 " />
-      <Button layoutX="14.0" layoutY="645.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="114.0" text="Clear" />
+      <Button layoutX="16.0" layoutY="622.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="114.0" text="Clear" />
    </children>
 </AnchorPane>

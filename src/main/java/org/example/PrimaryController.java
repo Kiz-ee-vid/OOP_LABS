@@ -3,7 +3,6 @@ package org.example;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 
 public class PrimaryController {
 
@@ -23,11 +22,6 @@ public class PrimaryController {
 
     @FXML
     private Label mouseCoordinates;
-
-
-    public void showMouseCoordinates(MouseEvent e) {
-        mouseCoordinates.setText(model.showMouseCoordinates(e.getX(), e.getY()));
-    }
 
 
     ///переделать для возможности выбора отсутствия заливки, границы
@@ -56,10 +50,6 @@ public class PrimaryController {
         model.setBorderColor(cpBorder.getValue());
         model.setBorderSize(1);
         brushSize.setText("1");
-        canvas.setOnMouseMoved(event -> {
-            String koordinates = String.format("X: %.0f  Y: %.0f", event.getX(), event.getY());
-            mouseCoordinates.setText(koordinates);
-        });
     }
 
     public void clearCanvas(){
