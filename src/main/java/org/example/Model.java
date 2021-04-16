@@ -13,10 +13,8 @@ import javafx.scene.paint.Paint;
 public class Model {
 
 
-    private final Canvas canvas;
-    private final GraphicsContext g;
-
-    private final List<Shapes> shapes = new ArrayList<>();
+    public final Canvas canvas;
+    public final GraphicsContext g;
     private final List<Double> point = new ArrayList<>();
     private final List<Shapes> currentShape = new ArrayList<>();
     private final List<ShapeFactory> shapesFactoryList = Arrays.asList(new PolylineFactory(), new LineFactory(), new RectFactory(), new CircFactory(),new EllipsFactory(), new PolygonumFactory() );
@@ -46,7 +44,7 @@ public class Model {
 
     public void fullClearCanvas(){
         g.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        shapes.clear();
+        UndoRedo.shapes.clear();
     }
 
     public void clearMouseEvents() {
@@ -56,9 +54,10 @@ public class Model {
         canvas.setOnMouseMoved(event -> {});
     }
 
-    public void clearCanvas() {
-        g.clearRect(0,0,canvas.getWidth(), canvas.getHeight());
+    public void clearCanvas(GraphicsContext g) {
+        this.g.clearRect(0,0,canvas.getWidth(), canvas.getHeight());
     }
+
 
     public void drawingSimpleShapes(int factoryNum){
         currentShape.clear();
@@ -71,8 +70,8 @@ public class Model {
         canvas.setOnMouseDragged(event -> {
             point.add(2,event.getX());
             point.add(3,event.getY());
-            clearCanvas();
-            for (Shapes shape : shapes) {
+            clearCanvas(g);
+            for (Shapes shape : UndoRedo.shapes) {
                 shape.draw(g);
             }
             currentShape.clear();
@@ -81,7 +80,8 @@ public class Model {
             currentShape.get(0).draw(g);
         });
         canvas.setOnMouseReleased(event -> {
-            shapes.add(currentShape.get(0));
+            UndoRedo.shapes.add(currentShape.get(0));
+            UndoRedo.History.clear();
         });
     }
 
@@ -97,14 +97,15 @@ public class Model {
             } else if (event.getButton() == MouseButton.SECONDARY) {
                 point.set(point.size() - 1, event.getY());
                 point.set(point.size() - 2, event.getX());
-                shapes.add(currentShape.get(0));
+                UndoRedo.shapes.add(currentShape.get(0));
+                UndoRedo.History.clear();
                 point.clear();
             }
         });
         canvas.setOnMouseMoved(event -> {
             if(point.size() > 0) {
-                clearCanvas();
-                for(Shapes shape :shapes) {
+                clearCanvas(g);
+                for(Shapes shape : UndoRedo.shapes) {
                     shape.draw(g);
                 }
                 point.set(point.size()-1,event.getY());
