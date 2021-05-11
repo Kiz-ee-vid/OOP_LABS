@@ -1,11 +1,13 @@
 package org.example.Figures;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
+import org.example.SeriaColor;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Polygonum extends Shapes {
-    public Polygonum(List<Double> point, Paint outlineColor, Paint brushColor, double lineWeight) {
+public class Polygonum extends Shapes implements Serializable {
+    public Polygonum(List<Double> point, SeriaColor outlineColor, SeriaColor brushColor, double lineWeight) {
 
         this.outline = outlineColor;
         this.background = brushColor;
@@ -14,8 +16,8 @@ public class Polygonum extends Shapes {
     }
     @Override
     public void draw(GraphicsContext g) {
-        g.setFill(background);
-        g.setStroke(outline);
+        g.setFill(background.getSerialColor());
+        g.setStroke(outline.getSerialColor());
         g.setLineWidth(lineWeight);
         double[] pointX = new double[point.size()/2];
         double[] pointY = new double[point.size()/2];

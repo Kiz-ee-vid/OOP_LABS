@@ -2,13 +2,17 @@ package org.example;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javafx.scene.input.MouseButton;
+import javafx.stage.FileChooser;
 import org.example.Figures.*;
 import org.example.Fabrics.*;
-import javafx.scene.paint.Paint;
+//import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 
 public class Model {
 
@@ -18,23 +22,24 @@ public class Model {
     private final List<Double> point = new ArrayList<>();
     private final List<Shapes> currentShape = new ArrayList<>();
     private final List<ShapeFactory> shapesFactoryList = Arrays.asList(new PolylineFactory(), new LineFactory(), new RectFactory(), new CircFactory(),new EllipsFactory(), new PolygonumFactory() );
-    private Paint background;
-    private Paint outline;
+    private SeriaColor background;
+    private SeriaColor outline;
     private double lineWeight;
-
+    private Serialise serialise;
     public Model(Canvas canvas) {
         this.canvas = canvas;
         this.g = canvas.getGraphicsContext2D();
+        serialise = new Serialise();
     }
 
-    public void setFillColor(Paint color) {
+    public void setFillColor(Color color) {
         g.setFill(color);
-        background = color;
+        background = new SeriaColor(color);
     }
 
-    public void setBorderColor(Paint color) {
+    public void setBorderColor(Color color) {
         g.setStroke(color);
-        outline = color;
+        outline =  new SeriaColor(color);
     }
 
     public void setBorderSize(double size) {
@@ -59,7 +64,7 @@ public class Model {
     }
 
 
-    public void drawingSimpleShapes(int factoryNum){
+    public void drawingSimpleShapes(ShapeFactory factory){
         currentShape.clear();
         point.clear();
         clearMouseEvents();
@@ -75,8 +80,8 @@ public class Model {
                 shape.draw(g);
             }
             currentShape.clear();
-            ShapeFactory Factory = shapesFactoryList.get(factoryNum);
-            currentShape.add(Factory.createShape(point, outline, background, lineWeight));
+         //   ShapeFactory Factory = shapesFactoryList.get(factoryNum);
+            currentShape.add(factory.createShape(point, outline, background, lineWeight));
             currentShape.get(0).draw(g);
         });
         canvas.setOnMouseReleased(event -> {
@@ -85,7 +90,7 @@ public class Model {
         });
     }
 
-    public void drawingDifficultShapes(int factoryNum){
+    public void drawingDifficultShapes(ShapeFactory factory){
         clearMouseEvents();
         point.clear();
         canvas.setOnMousePressed(event -> {
@@ -111,11 +116,46 @@ public class Model {
                 point.set(point.size()-1,event.getY());
                 point.set(point.size()-2,event.getX());
                 currentShape.clear();
-                ShapeFactory Factory = shapesFactoryList.get(factoryNum);
-                currentShape.add(Factory.createShape(point, outline, background, lineWeight));
+              //  ShapeFactory Factory = factory;
+                currentShape.add(factory.createShape(point, outline, background, lineWeight));
                 currentShape.get(0).draw(g);
             }
         });
     }
 
-}
+    public void Serialise() {
+        File file = serialise.Save();
+        try (ObjectOutputStream makefile = new ObjectOutputStream(new FileOutputStream(file)))
+        {
+            makefile.writeInt(UndoRedo.shapes.size());
+            for (Shapes shape : UndoRedo.shapes) {
+                makefile.writeObject(shape);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void Deserialise() {
+        File file = serialise.Open();
+        clearCanvas(g);
+        UndoRedo.shapes.clear();
+        UndoRedo.History.clear();
+        try(ObjectInputStream makefile = new ObjectInputStream(new FileInputStream(file)))
+        {
+            int length = makefile.readInt();
+            for(int i = 0; i < length; i++) {
+                UndoRedo.shapes.add((Shapes) makefile.readObject());
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        for (Shapes shape : UndoRedo.shapes) {
+            shape.draw(g);
+        }
+    }
+    }
+
+

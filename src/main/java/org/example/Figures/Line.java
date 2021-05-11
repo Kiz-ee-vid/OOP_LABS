@@ -1,11 +1,13 @@
 package org.example.Figures;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
+import org.example.SeriaColor;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Line extends Shapes {
-    public Line(List<Double> point, Paint outlineColor,  double lineWeight) {
+public class Line extends Shapes implements Serializable {
+    public Line(List<Double> point, SeriaColor outlineColor, double lineWeight) {
 
         this.outline = outlineColor;
         this.lineWeight = lineWeight;
@@ -13,7 +15,7 @@ public class Line extends Shapes {
     }
     @Override
     public void draw(GraphicsContext g)  {
-        g.setStroke(outline);
+        g.setStroke(outline.getSerialColor());
         g.setLineWidth(lineWeight);
         g.strokeLine(point.get(0), point.get(1), point.get(2), point.get(3));
     }
