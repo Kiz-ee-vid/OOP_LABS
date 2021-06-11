@@ -3,11 +3,8 @@ package org.example;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import org.example.Fabrics.ShapeFactory;
-import org.example.Figures.*;
+import javafx.scene.layout.VBox;
 import org.example.Fabrics.*;
-
-import java.io.*;
 
 public class PrimaryController {
 
@@ -28,7 +25,10 @@ public class PrimaryController {
     @FXML
     private Label mouseCoordinates;
 
-    ///переделать для возможности выбора отсутствия заливки, границы
+    @FXML
+    private VBox plug;
+
+    public void loadPlugins(){model.loadPlugins(plug);}
     public void setFillColor() {
         model.setFillColor(cpFill.getValue());
     }
@@ -53,6 +53,7 @@ public class PrimaryController {
         model.setBorderColor(cpBorder.getValue());
         model.setBorderSize(1);
         brushSize.setText("1");
+        loadPlugins();
     }
 
     public void pressUndo() {

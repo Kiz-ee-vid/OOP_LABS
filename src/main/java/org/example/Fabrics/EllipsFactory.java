@@ -1,13 +1,13 @@
 package org.example.Fabrics;
 
-import javafx.scene.paint.Paint;
 import org.example.Figures.Ellips;
-import org.example.Figures.Shapes;
-import org.example.SeriaColor;
+import org.example.core.SeriaColor;
+import org.example.core.ShapeFactory;
+import org.example.core.Shapes;
 
 import java.util.List;
 
-public class EllipsFactory implements ShapeFactory{
+public class EllipsFactory implements ShapeFactory {
     @Override
     public Shapes createShape(List<Double> point, SeriaColor outlineColor, SeriaColor brushColor, double lineWeight) {
         return (new Ellips(point, outlineColor, brushColor, lineWeight));

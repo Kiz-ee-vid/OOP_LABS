@@ -1,9 +1,7 @@
 package org.example;
 
-import javafx.stage.FileChooser;
-import org.example.Figures.Shapes;
+import org.example.core.Shapes;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;

@@ -1,12 +1,10 @@
-package org.example.Figures;
-
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
-import org.example.SeriaColor;
+package org.example.core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.scene.canvas.GraphicsContext;
 
 public class Shapes implements Serializable {
     protected List<Double> point = new ArrayList<>();

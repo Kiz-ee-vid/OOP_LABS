@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1000.0" style="-fx-background-color: #EBDCB2;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
@@ -22,11 +23,6 @@
           <MenuItem mnemonicParsing="false" onAction="#Open" text="Open" />
           <MenuItem mnemonicParsing="false" onAction="#Save" text="Save" />
         </items>
-         <font>
-            <Font name="Segoe Print" size="12.0" />
-         </font>
-      </MenuButton>
-      <MenuButton layoutX="6.0" layoutY="470.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="134.0" text="Other Figures">
          <font>
             <Font name="Segoe Print" size="12.0" />
          </font>
@@ -129,6 +125,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="16.0" layoutY="622.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="114.0" text="Clear" />
+      <Button layoutX="16.0" layoutY="679.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="26.0" prefWidth="114.0" text="Clear" />
+      <VBox fx:id="plug" layoutX="6.0" layoutY="420.0" prefHeight="242.0" prefWidth="134.0" />
    </children>
 </AnchorPane>

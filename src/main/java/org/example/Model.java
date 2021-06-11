@@ -4,14 +4,23 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.example.Figures.*;
 import org.example.Fabrics.*;
-//import javafx.scene.paint.Paint;
+import java.lang.module.Configuration;
+import java.lang.module.ModuleDescriptor;
+import java.lang.module.ModuleFinder;
+import java.lang.module.ModuleReference;
+import java.util.stream.Collectors;
+import org.example.core.*;
 import javafx.scene.paint.Color;
 
 public class Model {
@@ -21,7 +30,7 @@ public class Model {
     public final GraphicsContext g;
     private final List<Double> point = new ArrayList<>();
     private final List<Shapes> currentShape = new ArrayList<>();
-    private final List<ShapeFactory> shapesFactoryList = Arrays.asList(new PolylineFactory(), new LineFactory(), new RectFactory(), new CircFactory(),new EllipsFactory(), new PolygonumFactory() );
+   // private final List<ShapeFactory> shapesFactoryList = Arrays.asList(new PolylineFactory(), new LineFactory(), new RectFactory(), new CircFactory(),new EllipsFactory(), new PolygonumFactory() );
     private SeriaColor background;
     private SeriaColor outline;
     private double lineWeight;
@@ -30,6 +39,43 @@ public class Model {
         this.canvas = canvas;
         this.g = canvas.getGraphicsContext2D();
         serialise = new Serialise();
+    }
+
+    public void loadPlugins(VBox plug) {
+        Path pluginsDir = Paths.get("");
+
+        ModuleFinder pluginsFinder = ModuleFinder.of(pluginsDir);
+
+        List<String> plugins = pluginsFinder
+                .findAll()
+                .stream()
+                .map(ModuleReference::descriptor)
+                .map(ModuleDescriptor::name)
+                .collect(Collectors.toList());
+
+        Configuration pluginsConfiguration = ModuleLayer
+                .boot()
+                .configuration()
+                .resolve(pluginsFinder, ModuleFinder.of(), plugins);
+
+        ModuleLayer layer = ModuleLayer
+                .boot()
+                .defineModulesWithOneLoader(pluginsConfiguration, ClassLoader.getSystemClassLoader());
+
+        List<IService>  services = IService.getServices(layer);
+
+         for (IService service : services) {
+            Button button = new Button();
+            button.setOnAction(e -> {
+                ShapeFactory shapeFactory = service.createFactory();
+                drawingSimpleShapes(shapeFactory);
+            });
+            button.setText(service.getShapeName());
+            button.setPrefWidth(160);
+            button.setPrefHeight(30);
+
+            plug.getChildren().add(button);
+        }
     }
 
     public void setFillColor(Color color) {
@@ -80,7 +126,7 @@ public class Model {
                 shape.draw(g);
             }
             currentShape.clear();
-         //   ShapeFactory Factory = shapesFactoryList.get(factoryNum);
+         // ShapeFactory Factory = shapesFactoryList.get(factoryNum);
             currentShape.add(factory.createShape(point, outline, background, lineWeight));
             currentShape.get(0).draw(g);
         });

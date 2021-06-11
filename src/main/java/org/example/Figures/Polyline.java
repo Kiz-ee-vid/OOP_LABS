@@ -1,7 +1,8 @@
 package org.example.Figures;
 
 import javafx.scene.canvas.GraphicsContext;
-import org.example.SeriaColor;
+import org.example.core.SeriaColor;
+import org.example.core.Shapes;
 
 import java.io.Serializable;
 import java.util.List;
