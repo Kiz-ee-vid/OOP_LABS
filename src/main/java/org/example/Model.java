@@ -62,9 +62,9 @@ public class Model {
                 .boot()
                 .defineModulesWithOneLoader(pluginsConfiguration, ClassLoader.getSystemClassLoader());
 
-        List<IService>  services = IService.getServices(layer);
+         List<IService>  services = IService.getServices(layer);
 
-         for (IService service : services) {
+        for (IService service : services) {
             Button button = new Button();
             button.setOnAction(e -> {
                 ShapeFactory shapeFactory = service.createFactory();

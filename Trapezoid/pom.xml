@@ -16,10 +16,10 @@
   <dependencies>
     <dependency>
       <groupId>org.example.core</groupId>
-      <artifactId>Core</artifactId>
+      <artifactId>core</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>${basedir}/Core-1.0.jar</systemPath>
+      <systemPath>${basedir}/core.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
